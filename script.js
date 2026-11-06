@@ -1,4 +1,13 @@
 
+/* =================================
+   SID.DEV — MAIN JAVASCRIPT
+   Navigation, animations and UI
+================================= */
+
+/* =================================
+   ELEMENT REFERENCES
+================================= */
+
 const pages = [...document.querySelectorAll(".page")];
 const navLinks = [...document.querySelectorAll(".nav-link")];
 const pageButtons = [...document.querySelectorAll("[data-page]")];
@@ -6,108 +15,91 @@ const pageButtons = [...document.querySelectorAll("[data-page]")];
 const menuToggle = document.getElementById("menuToggle");
 const navLinksContainer = document.getElementById("navLinks");
 
-let currentPage = "home";
-let transitionToken = 0;
-let revealObserver = null;
+const filterButtons = [
+    ...document.querySelectorAll(".filter-btn")
+];
+
+const projectCards = [
+    ...document.querySelectorAll(".project-card")
+];
+
+const cursorGlow = document.querySelector(".cursor-glow");
+const progressBar = document.getElementById("progressBar");
+
+const contactForm = document.getElementById("contactForm");
+const formFeedback = document.getElementById("formFeedback");
 
 const reducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
 ).matches;
 
+const validPageIds = new Set(
+    pages.map(page => page.id)
+);
+
 /* =================================
-   PAGE NAVIGATION
+   GLOBAL STATE
 ================================= */
 
-function navigateTo(pageId) {
-    const target = document.getElementById(pageId);
-    const previous = document.getElementById(currentPage);
+let currentPage = "home";
+let pendingTransition = null;
+let revealObserver = null;
+let transitionToken = 0;
 
-    if (!target || target === previous) {
-        closeMobileMenu();
-        return;
+
+/* =================================
+   MOBILE MENU
+================================= */
+
+function closeMobileMenu() {
+
+    if (navLinksContainer) {
+        navLinksContainer.classList.remove("open");
     }
 
-    const token = ++transitionToken;
-
-    closeMobileMenu();
-
-    pages.forEach(page => {
-        page.classList.remove("is-leaving");
-
-        if (page !== previous && page !== target) {
-            page.classList.remove("active");
-            page.setAttribute("aria-hidden", "true");
-        }
-    });
-
-    if (reducedMotion) {
-        finishTransition();
-        return;
+    if (menuToggle) {
+        menuToggle.setAttribute(
+            "aria-expanded",
+            "false"
+        );
     }
-
-    previous.classList.remove("is-leaving");
-    void previous.offsetWidth;
-    previous.classList.add("is-leaving");
-
-    let completed = false;
-
-    function cleanup() {
-        previous.removeEventListener("animationend", onAnimationEnd);
-        clearTimeout(fallback);
-    }
-
-    function onAnimationEnd(event) {
-        if (
-            event.target === previous &&
-            event.animationName === "pageExit"
-        ) {
-            finishTransition();
-        }
-    }
-
-    function finishTransition() {
-        if (completed) return;
-        completed = true;
-        cleanup();
-
-        if (token !== transitionToken) return;
-
-        previous.classList.remove("active", "is-leaving");
-        previous.setAttribute("aria-hidden", "true");
-
-        target.classList.add("active");
-        target.setAttribute("aria-hidden", "false");
-
-        currentPage = pageId;
-
-        updateNavigation(pageId);
-
-        window.scrollTo({
-            top: 0,
-            behavior: reducedMotion ? "instant" : "smooth"
-        });
-
-        initializeReveals(target);
-    }
-
-    previous.addEventListener("animationend", onAnimationEnd);
-
-    // Fallback if the animation event is not fired.
-    const fallback = setTimeout(finishTransition, 280);
 }
 
-/* NAVIGATION BUTTONS */
+if (menuToggle && navLinksContainer) {
 
-pageButtons.forEach(button => {
-    button.addEventListener("click", event => {
-        event.preventDefault();
-        navigateTo(button.dataset.page);
+    menuToggle.addEventListener("click", () => {
+
+        const isOpen =
+            navLinksContainer.classList.toggle("open");
+
+        menuToggle.setAttribute(
+            "aria-expanded",
+            String(isOpen)
+        );
     });
-});
+
+    document.addEventListener("click", event => {
+
+        if (
+            !navLinksContainer.contains(event.target) &&
+            !menuToggle.contains(event.target)
+        ) {
+            closeMobileMenu();
+        }
+    });
+}
+
+
+/* =================================
+   NAVIGATION UI
+================================= */
 
 function updateNavigation(pageId) {
+
     navLinks.forEach(link => {
-        const active = link.dataset.page === pageId;
+
+        const active =
+            link.dataset.page === pageId;
 
         link.classList.toggle("active", active);
 
@@ -119,105 +111,432 @@ function updateNavigation(pageId) {
     });
 }
 
+
 /* =================================
-   MOBILE MENU
+   CANCEL PREVIOUS TRANSITION
 ================================= */
 
-menuToggle.addEventListener("click", () => {
-    const isOpen = navLinksContainer.classList.toggle("open");
+function cancelPendingTransition() {
 
-    menuToggle.setAttribute(
-        "aria-expanded",
-        String(isOpen)
-    );
-});
+    if (!pendingTransition) return;
 
-function closeMobileMenu() {
-    navLinksContainer.classList.remove("open");
+    pendingTransition.cancel();
 
-    menuToggle.setAttribute(
-        "aria-expanded",
-        "false"
+    pendingTransition = null;
+}
+
+
+/* =================================
+   ACTIVATE PAGE IMMEDIATELY
+================================= */
+
+function activatePageImmediately(pageId) {
+
+    cancelPendingTransition();
+
+    pages.forEach(page => {
+
+        const active = page.id === pageId;
+
+        page.classList.remove("is-leaving");
+        page.classList.toggle("active", active);
+
+        page.setAttribute(
+            "aria-hidden",
+            String(!active)
+        );
+    });
+
+    currentPage = pageId;
+
+    updateNavigation(pageId);
+
+    window.scrollTo({
+        top: 0,
+        behavior: "auto"
+    });
+
+    initializeReveals(
+        document.getElementById(pageId)
     );
 }
 
-document.addEventListener("click", event => {
-    if (
-        !navLinksContainer.contains(event.target) &&
-        !menuToggle.contains(event.target)
-    ) {
+
+/* =================================
+   PAGE NAVIGATION
+================================= */
+
+function navigateTo(pageId, options = {}) {
+
+    const {
+        updateHistory = true
+    } = options;
+
+    const target = document.getElementById(pageId);
+
+    // Reject invalid page IDs.
+    if (!target || !validPageIds.has(pageId)) {
         closeMobileMenu();
+        return;
     }
+
+    closeMobileMenu();
+
+    // Avoid duplicate navigation events.
+    if (
+        pendingTransition &&
+        pendingTransition.target === target
+    ) {
+        return;
+    }
+
+    if (
+        !pendingTransition &&
+        pageId === currentPage
+    ) {
+        return;
+    }
+
+    // Update browser history for normal button navigation.
+    if (updateHistory) {
+
+        const newHash = `#${pageId}`;
+
+        if (window.location.hash !== newHash) {
+
+            history.pushState(
+                { page: pageId },
+                "",
+                newHash
+            );
+        }
+    }
+
+    // Cancel any animation that was still running.
+    cancelPendingTransition();
+
+    const previous = pages.find(page =>
+        page.classList.contains("active")
+    );
+
+    // No previous active page: activate directly.
+    if (!previous || previous === target) {
+
+        activatePageImmediately(pageId);
+        return;
+    }
+
+    // Remove unwanted active states from other pages.
+    pages.forEach(page => {
+
+        if (
+            page !== previous &&
+            page !== target
+        ) {
+            page.classList.remove(
+                "active",
+                "is-leaving"
+            );
+
+            page.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+        }
+    });
+
+    // Reduced-motion users should not wait for animations.
+    if (reducedMotion) {
+
+        activatePageImmediately(pageId);
+        return;
+    }
+
+    const token = ++transitionToken;
+
+    let completed = false;
+    let fallback = null;
+
+    function cleanup() {
+
+        previous.removeEventListener(
+            "animationend",
+            onAnimationEnd
+        );
+
+        if (fallback !== null) {
+            clearTimeout(fallback);
+            fallback = null;
+        }
+    }
+
+    function finishTransition() {
+
+        if (completed) return;
+
+        completed = true;
+
+        cleanup();
+
+        if (token !== transitionToken) return;
+
+        previous.classList.remove(
+            "active",
+            "is-leaving"
+        );
+
+        previous.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        target.classList.add("active");
+
+        target.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        currentPage = pageId;
+
+        pendingTransition = null;
+
+        updateNavigation(pageId);
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+        initializeReveals(target);
+    }
+
+    function onAnimationEnd(event) {
+
+        if (
+            event.target === previous &&
+            event.animationName === "pageExit"
+        ) {
+            finishTransition();
+        }
+    }
+
+    // Register the listener before starting the animation.
+    previous.addEventListener(
+        "animationend",
+        onAnimationEnd
+    );
+
+    previous.classList.remove("is-leaving");
+
+    // Force the browser to restart the exit animation.
+    void previous.offsetWidth;
+
+    previous.classList.add("is-leaving");
+
+    // Fallback if animationend does not fire.
+    fallback = setTimeout(
+        finishTransition,
+        350
+    );
+
+    // Store cancellation logic for rapid navigation.
+    pendingTransition = {
+
+        target,
+
+        cancel() {
+
+            cleanup();
+
+            previous.classList.remove(
+                "is-leaving"
+            );
+
+            transitionToken++;
+        }
+    };
+}
+
+
+/* =================================
+   NAVIGATION BUTTON EVENTS
+================================= */
+
+pageButtons.forEach(button => {
+
+    button.addEventListener("click", event => {
+
+        event.preventDefault();
+
+        navigateTo(button.dataset.page);
+    });
 });
+
+
+/* =================================
+   BROWSER BACK / FORWARD
+================================= */
+
+function handleHistoryNavigation() {
+
+    const hash = window.location.hash;
+
+    const requestedPage = hash.startsWith("#")
+        ? hash.slice(1)
+        : "";
+
+    const pageId = validPageIds.has(requestedPage)
+        ? requestedPage
+        : "home";
+
+    if (
+        pendingTransition &&
+        pendingTransition.target.id === pageId
+    ) {
+        return;
+    }
+
+    if (
+        !pendingTransition &&
+        currentPage === pageId
+    ) {
+        return;
+    }
+
+    navigateTo(pageId, {
+        updateHistory: false
+    });
+}
+
+window.addEventListener(
+    "popstate",
+    handleHistoryNavigation
+);
+
+window.addEventListener(
+    "hashchange",
+    handleHistoryNavigation
+);
+
 
 /* =================================
    SCROLL REVEAL
 ================================= */
 
 function initializeReveals(container) {
+
+    // Disconnect the observer belonging to the previous page.
     if (revealObserver) {
+
         revealObserver.disconnect();
+
+        revealObserver = null;
     }
 
-    const elements = container.querySelectorAll(".reveal");
+    if (!container) return;
+
+    const elements = [
+        ...container.querySelectorAll(".reveal")
+    ];
+
+    if (elements.length === 0) return;
 
     elements.forEach((element, index) => {
+
         element.classList.remove("visible");
 
         element.style.transitionDelay =
             `${Math.min(index * 75, 450)}ms`;
+    });
 
-        if (reducedMotion) {
+    // Reduced-motion mode: show everything immediately.
+    if (reducedMotion) {
+
+        elements.forEach(element => {
             element.classList.add("visible");
-        }
-    });
-
-    if (reducedMotion) return;
-
-    revealObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
-                revealObserver.unobserve(entry.target);
-            }
         });
-    }, {
-        threshold: 0.12
-    });
+
+        return;
+    }
+
+    // Fallback for browsers without IntersectionObserver.
+    if (!("IntersectionObserver" in window)) {
+
+        elements.forEach(element => {
+            element.classList.add("visible");
+        });
+
+        return;
+    }
+
+    const observer = new IntersectionObserver(
+        entries => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add("visible");
+
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        {
+            threshold: 0.01,
+            rootMargin: "0px 0px -5% 0px"
+        }
+    );
+
+    revealObserver = observer;
 
     elements.forEach(element => {
-        revealObserver.observe(element);
+
+        observer.observe(element);
     });
 }
+
 
 /* =================================
    PROJECT FILTERS
 ================================= */
 
-const filterButtons = document.querySelectorAll(".filter-btn");
-const projectCards = document.querySelectorAll(".project-card");
-
 filterButtons.forEach(button => {
+
     button.addEventListener("click", () => {
 
         const filter = button.dataset.filter;
 
         filterButtons.forEach(item => {
-            item.classList.remove("active");
+
+            item.classList.toggle(
+                "active",
+                item === button
+            );
         });
 
-        button.classList.add("active");
-
         projectCards.forEach(card => {
-            const categories = card.dataset.category.split(" ");
+
+            const categories = (
+                card.dataset.category || ""
+            ).split(/\s+/);
 
             const matches =
                 filter === "all" ||
                 categories.includes(filter);
 
-            card.classList.toggle("is-filtered", !matches);
+            card.classList.toggle(
+                "is-filtered",
+                !matches
+            );
 
-            if (matches && !reducedMotion) {
+            if (
+                matches &&
+                !reducedMotion &&
+                typeof card.animate === "function"
+            ) {
+
                 card.animate(
                     [
                         {
@@ -239,6 +558,7 @@ filterButtons.forEach(button => {
     });
 });
 
+
 /* =================================
    PROJECT CARD 3D TILT
 ================================= */
@@ -247,16 +567,24 @@ if (
     window.matchMedia("(hover: hover)").matches &&
     !reducedMotion
 ) {
+
     projectCards.forEach(card => {
 
         card.addEventListener("pointermove", event => {
 
-            if (card.classList.contains("is-filtered")) return;
+            if (card.classList.contains("is-filtered")) {
+                return;
+            }
 
             const rect = card.getBoundingClientRect();
 
-            const x = (event.clientX - rect.left) / rect.width;
-            const y = (event.clientY - rect.top) / rect.height;
+            if (!rect.width || !rect.height) return;
+
+            const x =
+                (event.clientX - rect.left) / rect.width;
+
+            const y =
+                (event.clientY - rect.top) / rect.height;
 
             const rotateX = (0.5 - y) * 7;
             const rotateY = (x - 0.5) * 7;
@@ -266,32 +594,40 @@ if (
         });
 
         card.addEventListener("pointerleave", () => {
+
             card.style.transform = "";
         });
     });
 }
 
+
 /* =================================
    CURSOR GLOW
 ================================= */
 
-const cursorGlow = document.querySelector(".cursor-glow");
-
-if (window.matchMedia("(hover: hover)").matches) {
+if (
+    cursorGlow &&
+    window.matchMedia("(hover: hover)").matches
+) {
 
     window.addEventListener("pointermove", event => {
-        cursorGlow.style.left = `${event.clientX}px`;
-        cursorGlow.style.top = `${event.clientY}px`;
+
+        cursorGlow.style.left =
+            `${event.clientX}px`;
+
+        cursorGlow.style.top =
+            `${event.clientY}px`;
     });
 }
+
 
 /* =================================
    READING PROGRESS
 ================================= */
 
-const progressBar = document.getElementById("progressBar");
+function updateReadingProgress() {
 
-window.addEventListener("scroll", () => {
+    if (!progressBar) return;
 
     const scrollable =
         document.documentElement.scrollHeight -
@@ -301,67 +637,127 @@ window.addEventListener("scroll", () => {
         ? (window.scrollY / scrollable) * 100
         : 0;
 
-    progressBar.style.width = `${progress}%`;
+    progressBar.style.width =
+        `${Math.min(100, Math.max(0, progress))}%`;
+}
 
-}, { passive: true });
+window.addEventListener(
+    "scroll",
+    updateReadingProgress,
+    { passive: true }
+);
+
+window.addEventListener(
+    "resize",
+    updateReadingProgress
+);
+
 
 /* =================================
    CONTACT FORM
 ================================= */
 
-const contactForm = document.getElementById("contactForm");
-const formFeedback = document.getElementById("formFeedback");
+if (contactForm && formFeedback) {
 
-contactForm.addEventListener("submit", event => {
+    contactForm.addEventListener("submit", event => {
 
-    event.preventDefault();
+        event.preventDefault();
 
-    const senderEmail =
-        document.getElementById("senderEmail").value.trim();
+        const senderEmail =
+            document.getElementById("senderEmail")
+                ?.value.trim();
 
-    const subject =
-        document.getElementById("subject").value.trim();
+        const subject =
+            document.getElementById("subject")
+                ?.value.trim();
 
-    const message =
-        document.getElementById("message").value.trim();
+        const message =
+            document.getElementById("message")
+                ?.value.trim();
 
-    if (!senderEmail || !subject || !message) {
+        if (!senderEmail || !subject || !message) {
+
+            formFeedback.textContent =
+                "Please complete all fields.";
+
+            return;
+        }
+
+        if (!contactForm.reportValidity()) {
+            return;
+        }
+
+        const recipient =
+            "pranaysiddardhareddy@gmail.com";
+
+        const emailBody =
+            `From: ${senderEmail}\n\n${message}`;
+
+        const mailtoLink =
+            `mailto:${recipient}` +
+            `?subject=${encodeURIComponent(subject)}` +
+            `&body=${encodeURIComponent(emailBody)}`;
+
         formFeedback.textContent =
-            "Please complete all fields.";
-        return;
-    }
+            "Opening your default email application...";
 
-    if (!contactForm.reportValidity()) {
-        return;
-    }
+        window.location.href = mailtoLink;
+    });
+}
 
-    const recipient = "pranaysiddardhareddy@gmail.com";
-
-    const emailBody =
-        `From: ${senderEmail}\n\n${message}`;
-
-    const mailtoLink =
-        `mailto:${recipient}` +
-        `?subject=${encodeURIComponent(subject)}` +
-        `&body=${encodeURIComponent(emailBody)}`;
-
-    formFeedback.textContent =
-        "Opening your default email application...";
-
-    window.location.href = mailtoLink;
-});
 
 /* =================================
    CURRENT YEAR
 ================================= */
 
-document.getElementById("year").textContent =
-    new Date().getFullYear();
+const yearElement = document.getElementById("year");
+
+if (yearElement) {
+
+    yearElement.textContent =
+        new Date().getFullYear();
+}
+
 
 /* =================================
    INITIALIZATION
 ================================= */
 
-initializeReveals(document.getElementById("home"));
-updateNavigation("home");
+function initializeWebsite() {
+
+    // Restore the requested page from the URL.
+    const hash = window.location.hash;
+
+    const requestedPage = hash.startsWith("#")
+        ? hash.slice(1)
+        : "";
+
+    const initialPage = validPageIds.has(requestedPage)
+        ? requestedPage
+        : "home";
+
+    // Normalize an invalid URL hash.
+    if (
+        hash &&
+        !validPageIds.has(requestedPage)
+    ) {
+
+        history.replaceState(
+            { page: "home" },
+            "",
+            "#home"
+        );
+    }
+
+    // Set the correct page without running a transition.
+    activatePageImmediately(initialPage);
+
+    // Start reading progress at the correct position.
+    updateReadingProgress();
+
+    // Make sure the mobile menu starts closed.
+    closeMobileMenu();
+}
+
+initializeWebsite();
 
