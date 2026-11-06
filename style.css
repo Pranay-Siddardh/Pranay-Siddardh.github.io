@@ -2,12 +2,11 @@
 :root {
     --bg: #080d19;
     --surface: #101a2b;
-    --surface-light: #142238;
     --text: #edf4ff;
     --muted: #91a1b8;
     --accent: #65e6c0;
     --blue: #6d9eff;
-    --border: rgba(153, 180, 220, 0.14);
+    --border: rgba(153, 180, 220, .14);
     --font: 'Inter', sans-serif;
     --display: 'Space Grotesk', sans-serif;
 }
@@ -51,8 +50,8 @@ a {
     z-index: -3;
     pointer-events: none;
     background-image:
-        linear-gradient(rgba(125, 155, 205, .035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(125, 155, 205, .035) 1px, transparent 1px);
+        linear-gradient(rgba(125,155,205,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(125,155,205,.035) 1px, transparent 1px);
     background-size: 48px 48px;
     mask-image: linear-gradient(to bottom, black, transparent 90%);
 }
@@ -83,8 +82,8 @@ a {
 }
 
 @keyframes ambient {
-    from { transform: translate(0, 0) scale(.9); }
-    to { transform: translate(100px, 80px) scale(1.2); }
+    from { transform: translate(0,0) scale(.9); }
+    to { transform: translate(100px,80px) scale(1.2); }
 }
 
 .cursor-glow {
@@ -95,12 +94,12 @@ a {
     pointer-events: none;
     z-index: -1;
     background: radial-gradient(circle, rgba(101,230,192,.055), transparent 70%);
-    transform: translate(-50%, -50%);
+    transform: translate(-50%,-50%);
     left: -500px;
     top: -500px;
 }
 
-/* PROGRESS */
+/* READING PROGRESS */
 
 .progress-track {
     position: fixed;
@@ -109,7 +108,6 @@ a {
     width: 100%;
     height: 2px;
     z-index: 1000;
-    background: transparent;
 }
 
 .progress-bar {
@@ -200,6 +198,7 @@ a {
     border: 1px solid rgba(101,230,192,.4);
     border-radius: 8px;
     color: var(--accent);
+    background: transparent;
     font-size: 13px;
     transition: .3s;
 }
@@ -247,7 +246,7 @@ a {
 }
 
 .page.is-leaving {
-    animation: pageExit .2s ease both;
+    animation: pageExit .22s ease both;
 }
 
 @keyframes pageEnter {
@@ -269,6 +268,8 @@ a {
         transform: translateY(-8px);
     }
 }
+
+/* GENERAL LAYOUT */
 
 .section-container {
     max-width: 1160px;
@@ -312,7 +313,10 @@ a {
 }
 
 @keyframes pulse {
-    50% { box-shadow: 0 0 3px var(--accent); opacity: .6; }
+    50% {
+        box-shadow: 0 0 3px var(--accent);
+        opacity: .6;
+    }
 }
 
 .hero-intro {
@@ -436,8 +440,9 @@ a {
     border: 1px solid rgba(101,230,192,.22);
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 30px 90px rgba(0,0,0,.35),
-                0 0 50px rgba(101,230,192,.06);
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.35),
+        0 0 50px rgba(101,230,192,.06);
     transform: rotateY(-8deg) rotateX(3deg);
     animation: windowFloat 6s ease-in-out infinite;
     position: relative;
@@ -445,8 +450,12 @@ a {
 }
 
 @keyframes windowFloat {
-    0%,100% { transform: translateY(0) rotateY(-8deg) rotateX(3deg); }
-    50% { transform: translateY(-15px) rotateY(-4deg) rotateX(1deg); }
+    0%, 100% {
+        transform: translateY(0) rotateY(-8deg) rotateX(3deg);
+    }
+    50% {
+        transform: translateY(-15px) rotateY(-4deg) rotateX(1deg);
+    }
 }
 
 .window-header {
@@ -476,7 +485,7 @@ a {
 .window-dots span:nth-child(3) { background: #65e6c0; }
 
 .code-content {
-    padding: 25px 25px 28px;
+    padding: 25px;
     font-family: monospace;
     font-size: 13px;
     line-height: 2;
@@ -497,7 +506,9 @@ a {
     color: var(--muted);
 }
 
-.terminal-line span { color: var(--accent); }
+.terminal-line span {
+    color: var(--accent);
+}
 
 .terminal-line i {
     display: inline-block;
@@ -530,7 +541,9 @@ a {
     animation-duration: 45s;
 }
 
-@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
 
 .floating-code {
     position: absolute;
@@ -546,7 +559,11 @@ a {
     animation: floatBadge 5s ease-in-out infinite;
 }
 
-.code-top { top: 25px; right: -5px; }
+.code-top {
+    top: 25px;
+    right: -5px;
+}
+
 .code-bottom {
     bottom: 20px;
     left: 0;
@@ -613,8 +630,11 @@ a {
 /* GLASS CARDS */
 
 .glass-card {
-    background: linear-gradient(145deg, rgba(19,33,54,.88),
-                                rgba(12,22,38,.84));
+    background: linear-gradient(
+        145deg,
+        rgba(19,33,54,.88),
+        rgba(12,22,38,.84)
+    );
     border: 1px solid var(--border);
     border-radius: 15px;
     transition: border-color .35s, transform .35s, box-shadow .35s;
@@ -622,8 +642,9 @@ a {
 
 .glass-card:hover {
     border-color: rgba(101,230,192,.38);
-    box-shadow: 0 18px 55px rgba(0,0,0,.22),
-                0 0 25px rgba(101,230,192,.04);
+    box-shadow:
+        0 18px 55px rgba(0,0,0,.22),
+        0 0 25px rgba(101,230,192,.04);
     transform: translateY(-7px);
 }
 
@@ -905,57 +926,107 @@ a {
     margin-bottom: 40px;
 }
 
-.contact-card {
-    max-width: 650px;
+.contact-form {
+    width: 100%;
+    max-width: 680px;
     margin: auto;
-    padding: 55px 25px;
+    padding: 38px;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
 }
 
-.contact-icon {
-    display: grid;
-    place-items: center;
-    width: 60px;
-    height: 60px;
-    margin: auto auto 22px;
-    border-radius: 17px;
-    background: rgba(101,230,192,.1);
-    color: var(--accent);
-    font-size: 27px;
+.contact-form::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+        130deg,
+        rgba(101,230,192,.45),
+        transparent 40%,
+        rgba(109,158,255,.45)
+    );
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
 }
 
-.contact-card h3 {
-    font-family: var(--display);
-    font-size: 25px;
+.form-group {
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
 }
 
-.contact-card p {
-    color: var(--muted);
+.form-group label {
+    display: block;
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.form-group input,
+.form-group textarea {
+    display: block;
+    width: 100%;
+    background: rgba(5,12,25,.7);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 15px 16px;
+    outline: none;
+    font-family: var(--font);
     font-size: 13px;
-    margin: 12px 0 26px;
+    transition: border-color .3s, box-shadow .3s;
 }
 
-.email-link {
-    display: block;
+.form-group textarea {
+    resize: vertical;
+    min-height: 150px;
+    line-height: 1.7;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #64758e;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--accent);
+    box-shadow:
+        0 0 0 3px rgba(101,230,192,.08),
+        0 0 20px rgba(101,230,192,.06);
+}
+
+.send-button {
+    width: 100%;
+    border: none;
+    font-size: 14px;
+    position: relative;
+    z-index: 1;
+}
+
+.send-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 35px rgba(101,230,192,.2);
+}
+
+.send-button span {
+    margin-left: 12px;
+}
+
+.form-feedback {
+    min-height: 18px;
+    margin-top: 15px;
+    text-align: center;
     color: var(--accent);
-    font-size: clamp(12px, 3vw, 16px);
-    margin-bottom: 25px;
-    overflow-wrap: anywhere;
-}
-
-.email-link span {
-    margin-left: 5px;
-}
-
-.copy-email {
-    border: 0;
-}
-
-.copy-feedback {
-    display: block;
-    color: var(--accent);
-    font-size: 11px;
-    margin-top: 14px;
-    min-height: 15px;
+    font-size: 12px;
 }
 
 /* FOOTER */
@@ -981,12 +1052,14 @@ a {
     font-size: 16px;
 }
 
-/* REVEAL ANIMATION */
+/* SCROLL REVEAL */
 
 .reveal {
     opacity: 0;
     transform: translateY(25px);
-    transition: opacity .75s ease, transform .75s cubic-bezier(.2,.8,.2,1);
+    transition:
+        opacity .75s ease,
+        transform .75s cubic-bezier(.2,.8,.2,1);
 }
 
 .reveal.visible {
@@ -997,6 +1070,7 @@ a {
 /* RESPONSIVE */
 
 @media (max-width: 900px) {
+
     .hero {
         grid-template-columns: 1fr;
         padding-top: 80px;
@@ -1021,6 +1095,7 @@ a {
 }
 
 @media (max-width: 650px) {
+
     .navbar,
     .section-container,
     .footer {
@@ -1056,8 +1131,14 @@ a {
     }
 
     @keyframes menuEnter {
-        from { opacity: 0; transform: translateY(-8px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .nav-link {
@@ -1133,6 +1214,10 @@ a {
 
     .about-note p {
         font-size: 17px;
+    }
+
+    .contact-form {
+        padding: 24px 18px;
     }
 
     .footer {

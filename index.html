@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta name="theme-color" content="#080d19">
-    <meta name="description" content="Sid.dev - Developer and Electronics Enthusiast">
+    <meta name="description" content="Sid.dev - Developer and Engineering Enthusiast">
 
     <title>Sid.dev</title>
+    <link rel="icon" type="image/x-icon" href="logo.ico">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,17 +20,18 @@
 
 <body>
 
+    <div class="background-grid"></div>
     <div class="background-glow glow-one"></div>
     <div class="background-glow glow-two"></div>
-    <div class="background-grid"></div>
-
     <div class="cursor-glow"></div>
 
     <div class="progress-track">
         <div class="progress-bar" id="progressBar"></div>
     </div>
 
+    <!-- NAVIGATION -->
     <header class="navbar">
+
         <a href="#home" class="logo" data-page="home">
             <span class="logo-icon">&lt;/&gt;</span>
             <span class="logo-text">Sid.dev</span>
@@ -52,14 +53,15 @@
             <button class="nav-link" data-page="contact">Contact</button>
         </nav>
 
-        <a href="#contact" class="nav-cta" data-page="contact">
+        <button class="nav-cta" data-page="contact">
             Let's Talk <span>↗</span>
-        </a>
+        </button>
+
     </header>
 
     <main class="main-content">
 
-        <!-- HOME -->
+        <!-- HOME PAGE -->
         <section class="page active" id="home" aria-hidden="false">
 
             <div class="hero section-container">
@@ -82,9 +84,8 @@
 
                     <p class="hero-description reveal">
                         Exploring the intersection of software, electronics,
-                        robotics and creative engineering.
-                        Turning ideas into working projects, one experiment
-                        at a time.
+                        robotics and creative engineering. Turning ideas into
+                        working projects, one experiment at a time.
                     </p>
 
                     <div class="hero-buttons reveal">
@@ -98,6 +99,7 @@
                     </div>
 
                     <div class="hero-stats reveal">
+
                         <div>
                             <strong>04<span>+</span></strong>
                             <small>Projects</small>
@@ -112,11 +114,13 @@
                             <strong>01</strong>
                             <small>Goal: Keep Building</small>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
 
+                <!-- ANIMATED CODE WINDOW -->
                 <div class="hero-visual reveal">
+
                     <div class="orbit orbit-one"></div>
                     <div class="orbit orbit-two"></div>
 
@@ -125,30 +129,24 @@
                     </div>
 
                     <div class="code-window">
+
                         <div class="window-header">
                             <div class="window-dots">
-                                <span></span><span></span><span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
                             </div>
                             <span>developer.js</span>
                         </div>
 
                         <div class="code-content">
-                            <p><span class="code-purple">const</span>
-                                developer = {</p>
-                            <p class="indent">name:
-                                <span class="code-green">'Sid'</span>,</p>
-                            <p class="indent">focus:
-                                <span class="code-green">'Engineering'</span>,</p>
+                            <p><span class="code-purple">const</span> developer = {</p>
+                            <p class="indent">name: <span class="code-green">'Sid'</span>,</p>
+                            <p class="indent">focus: <span class="code-green">'Engineering'</span>,</p>
                             <p class="indent">interests: [</p>
-                            <p class="indent2">
-                                <span class="code-orange">'Robotics'</span>,
-                            </p>
-                            <p class="indent2">
-                                <span class="code-orange">'Electronics'</span>,
-                            </p>
-                            <p class="indent2">
-                                <span class="code-orange">'Software'</span>
-                            </p>
+                            <p class="indent2"><span class="code-orange">'Robotics'</span>,</p>
+                            <p class="indent2"><span class="code-orange">'Electronics'</span>,</p>
+                            <p class="indent2"><span class="code-orange">'Software'</span></p>
                             <p class="indent">],</p>
                             <p class="indent">building: <span class="code-blue">true</span></p>
                             <p>};</p>
@@ -158,11 +156,14 @@
                                 <i></i>
                             </p>
                         </div>
+
                     </div>
 
                     <div class="floating-code code-bottom">
-                        <span class="status-dot"></span> System online
+                        <span class="status-dot"></span>
+                        System online
                     </div>
+
                 </div>
 
             </div>
@@ -174,16 +175,19 @@
 
         </section>
 
-        <!-- ABOUT -->
+        <!-- ABOUT PAGE -->
         <section class="page" id="about" aria-hidden="true">
 
             <div class="section-container inner-page">
 
                 <div class="section-heading reveal">
                     <span class="eyebrow">01 / ABOUT ME</span>
-                    <h2>Curiosity drives<br>
+
+                    <h2>
+                        Curiosity drives<br>
                         <span class="gradient-text">everything.</span>
                     </h2>
+
                     <p>A little about the person behind the projects.</p>
                 </div>
 
@@ -235,14 +239,16 @@
 
         </section>
 
-        <!-- PROJECTS -->
+        <!-- PROJECTS PAGE -->
         <section class="page" id="projects" aria-hidden="true">
 
             <div class="section-container inner-page">
 
                 <div class="section-heading reveal">
                     <span class="eyebrow">02 / SELECTED WORK</span>
-                    <h2>Things I've <span class="gradient-text">built.</span></h2>
+                    <h2>
+                        Things I've <span class="gradient-text">built.</span>
+                    </h2>
                     <p>Experiments, electronics and engineering projects.</p>
                 </div>
 
@@ -365,14 +371,18 @@
 
         </section>
 
-        <!-- SKILLS -->
+        <!-- SKILLS PAGE -->
         <section class="page" id="skills" aria-hidden="true">
 
             <div class="section-container inner-page">
 
                 <div class="section-heading reveal">
                     <span class="eyebrow">03 / CAPABILITIES</span>
-                    <h2>Tools of the <span class="gradient-text">trade.</span></h2>
+
+                    <h2>
+                        Tools of the <span class="gradient-text">trade.</span>
+                    </h2>
+
                     <p>Technologies and areas I'm exploring.</p>
                 </div>
 
@@ -381,14 +391,17 @@
                     <div class="skill-card glass-card reveal">
                         <span class="skill-icon">⌘</span>
                         <h3>Programming</h3>
+
                         <div class="skill-item">
                             <div><span>C / C++</span><span>Exploring</span></div>
                             <div class="skill-track"><span style="--level:75%"></span></div>
                         </div>
+
                         <div class="skill-item">
                             <div><span>Python</span><span>Exploring</span></div>
                             <div class="skill-track"><span style="--level:65%"></span></div>
                         </div>
+
                         <div class="skill-item">
                             <div><span>JavaScript</span><span>Exploring</span></div>
                             <div class="skill-track"><span style="--level:70%"></span></div>
@@ -398,14 +411,17 @@
                     <div class="skill-card glass-card reveal">
                         <span class="skill-icon">ϟ</span>
                         <h3>Embedded Systems</h3>
+
                         <div class="skill-item">
                             <div><span>ESP32</span><span>Hands-on</span></div>
                             <div class="skill-track"><span style="--level:80%"></span></div>
                         </div>
+
                         <div class="skill-item">
                             <div><span>Raspberry Pi Pico</span><span>Hands-on</span></div>
                             <div class="skill-track"><span style="--level:65%"></span></div>
                         </div>
+
                         <div class="skill-item">
                             <div><span>Arduino IDE</span><span>Hands-on</span></div>
                             <div class="skill-track"><span style="--level:75%"></span></div>
@@ -415,14 +431,17 @@
                     <div class="skill-card glass-card reveal">
                         <span class="skill-icon">⌬</span>
                         <h3>Electronics</h3>
+
                         <div class="skill-item">
                             <div><span>Motor Drivers</span><span>Hands-on</span></div>
                             <div class="skill-track"><span style="--level:75%"></span></div>
                         </div>
+
                         <div class="skill-item">
                             <div><span>Basic Circuit Design</span><span>Hands-on</span></div>
                             <div class="skill-track"><span style="--level:70%"></span></div>
                         </div>
+
                         <div class="skill-item">
                             <div><span>Debugging</span><span>Learning</span></div>
                             <div class="skill-track"><span style="--level:70%"></span></div>
@@ -439,47 +458,66 @@
 
         </section>
 
-        <!-- CONTACT -->
+        <!-- CONTACT PAGE -->
         <section class="page" id="contact" aria-hidden="true">
 
             <div class="section-container inner-page contact-page">
 
                 <div class="section-heading reveal">
                     <span class="eyebrow">04 / GET IN TOUCH</span>
-                    <h2>Have an idea?<br>
+
+                    <h2>
+                        Have an idea?<br>
                         <span class="gradient-text">Let's connect.</span>
                     </h2>
+
                     <p>
-                        Interested in projects, engineering,
-                        collaboration or just exchanging ideas?
+                        Have a question, project idea or collaboration in mind?
+                        Send me a message.
                     </p>
                 </div>
 
-                <div class="contact-card glass-card reveal">
+                <form class="contact-form glass-card reveal"
+                      id="contactForm">
 
-                    <div class="contact-icon">✉</div>
+                    <div class="form-group">
+                        <label for="senderEmail">Your Email</label>
+                        <input
+                            type="email"
+                            id="senderEmail"
+                            name="email"
+                            placeholder="yourname@example.com"
+                            required>
+                    </div>
 
-                    <h3>Drop me a message.</h3>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input
+                            type="text"
+                            id="subject"
+                            name="subject"
+                            placeholder="What would you like to discuss?"
+                            required>
+                    </div>
 
-                    <p>
-                        The easiest way to reach me is through email.
-                    </p>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea
+                            id="message"
+                            name="message"
+                            rows="6"
+                            placeholder="Write your message here..."
+                            required></textarea>
+                    </div>
 
-                    <a class="email-link"
-                       href="mailto:pranaysiddardhareddy@gmail.com">
-                        pranaysiddardhareddy@gmail.com
-                        <span>↗</span>
-                    </a>
-
-                    <button class="primary-button copy-email"
-                            id="copyEmail">
-                        Copy Email <span>▣</span>
+                    <button type="submit" class="primary-button send-button">
+                        Send Message <span>➤</span>
                     </button>
 
-                    <span class="copy-feedback" id="copyFeedback"
-                          aria-live="polite"></span>
+                    <p class="form-feedback" id="formFeedback"
+                       aria-live="polite"></p>
 
-                </div>
+                </form>
 
             </div>
 
@@ -487,10 +525,17 @@
 
     </main>
 
+    <!-- FOOTER -->
     <footer class="footer">
-        <a href="#home" class="footer-logo" data-page="home">Sid.dev</a>
+
+        <a href="#home" class="footer-logo" data-page="home">
+            Sid.dev
+        </a>
+
         <p>Designed & built with curiosity.</p>
+
         <span>© <span id="year"></span> Sid.dev</span>
+
     </footer>
 
 </body>
