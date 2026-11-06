@@ -1,9 +1,192 @@
-<html>
-	<head>
-		<title>Hello</title>
-	</head>
-	<body>
-		Hello
-	</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Beyond the Circuit — an engineering portfolio exploring electronics, mathematics, programming and the principles behind real-world systems.">
+  <meta name="theme-color" content="#080b12">
+  <title>Beyond the Circuit — Engineering Through Curiosity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="Beyond the Circuit home">
+      <span class="brand-mark">B<span>.</span>C</span>
+      <span class="brand-name">BEYOND THE CIRCUIT</span>
+    </a>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#explorations">Explorations</a>
+      <a href="#curiosity">Curiosity</a>
+      <a class="nav-contact" href="#contact">Get in touch <span>↗</span></a>
+    </nav>
+  </header>
 
+  <main>
+    <section class="hero section-wrap" id="home">
+      <div class="hero-copy reveal">
+        <div class="eyebrow"><span class="status-dot"></span> ENGINEERING PORTFOLIO <span class="eyebrow-line"></span> 2026</div>
+        <p class="hero-kicker">A curious mind. An engineering mindset.</p>
+        <h1>Beyond<br>the <span>Circuit.</span></h1>
+        <p class="hero-description">Exploring how things work — from the behaviour of electrical systems to the mathematics and code that describe them.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#projects">Explore my work <span>↘</span></a>
+          <a class="text-link" href="#about">A little about me <span>→</span></a>
+        </div>
+        <div class="hero-meta">
+          <div><span class="meta-label">FOCUS</span><strong>Electronics · Mathematics · Code</strong></div>
+          <div><span class="meta-label">APPROACH</span><strong>Understand first. Build next.</strong></div>
+        </div>
+      </div>
+      <div class="hero-visual reveal" aria-label="Abstract circuit-inspired visual">
+        <div class="visual-topline"><span>FIG. 01 / SYSTEMS IN MOTION</span><span>01—04</span></div>
+        <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="orbit orbit-c"></div>
+        <div class="core"><div class="core-inner"><span class="core-symbol">∿</span><span class="core-label">CURIOSITY<br>ENGINE</span></div></div>
+        <span class="node node-one"></span><span class="node node-two"></span><span class="node node-three"></span>
+        <span class="circuit-label label-one">SIGNAL / 01</span>
+        <span class="circuit-label label-two">LOGIC / 02</span>
+        <span class="circuit-label label-three">IDEAS / ∞</span>
+        <div class="visual-bottomline"><span>OBSERVE → QUESTION → EXPERIMENT</span><span class="pulse-bars"><i></i><i></i><i></i><i></i><i></i></span></div>
+      </div>
+      <div class="scroll-note"><span></span> SCROLL TO EXPLORE</div>
+    </section>
+
+    <section class="intro-band">
+      <div class="section-wrap intro-inner">
+        <span class="section-index">[ 00 / PRINCIPLE ]</span>
+        <p>Not just building things,<br><em>but understanding why they work.</em></p>
+        <span class="intro-mark">✳</span>
+      </div>
+    </section>
+
+    <section class="content-section section-wrap" id="about">
+      <div class="section-heading reveal">
+        <span class="section-index">[ 01 / ABOUT ]</span>
+        <div><p class="section-overline">THE PERSON BEHIND THE PROJECTS</p><h2>Learning by<br><span>looking deeper.</span></h2></div>
+      </div>
+      <div class="about-grid">
+        <div class="about-lead reveal">
+          <p class="large-copy">I’m an engineering student driven by curiosity about the systems that shape the world around us.</p>
+        </div>
+        <div class="about-detail reveal">
+          <p>My interests move between practical electronics, mathematical foundations, circuit analysis and programming. I enjoy taking an idea apart conceptually, understanding the principles behind it, and then exploring how those principles can become something tangible.</p>
+          <p>This portfolio is a record of that process: projects, experiments, technical explorations and questions worth investigating.</p>
+          <div class="signature-line"><span class="signature-dot"></span><span>CURIOUS BY NATURE. ENGINEERING BY PRACTICE.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section projects-section" id="projects">
+      <div class="section-wrap">
+        <div class="section-heading reveal">
+          <span class="section-index">[ 02 / SELECTED WORK ]</span>
+          <div><p class="section-overline">FROM CONCEPT TO CIRCUIT</p><h2>Projects &<br><span>experiments.</span></h2></div>
+        </div>
+        <div class="project-grid">
+          <article class="project-card project-feature reveal">
+            <div class="project-art clock-art">
+              <div class="art-caption">PROTOTYPE STUDY / 001</div>
+              <div class="seven-seg"><b>8</b><b>8</b><i>:</i><b>8</b><b>8</b><i>:</i><b>8</b><b>8</b></div>
+              <div class="art-circuit"></div>
+              <div class="art-foot">MULTIPLEXED DISPLAY SYSTEM</div>
+            </div>
+            <div class="project-info">
+              <div class="project-tags"><span>ARDUINO</span><span>PCB DESIGN</span><span>DISPLAY SYSTEMS</span></div>
+              <h3>Six-digit digital clock</h3>
+              <p>A digital clock concept built around six single-digit, common-anode 7-segment displays. Exploring multiplexing, decoder interfacing, removable components and a practical PCB layout.</p>
+              <span class="project-status"><i></i> IN DEVELOPMENT</span>
+            </div>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-art sine-art">
+              <div class="art-caption">SIGNAL STUDY / 002</div>
+              <svg viewBox="0 0 500 220" role="img" aria-label="Sine wave plotted on a coordinate grid">
+                <defs><pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M 32 0 L 0 0 0 32" fill="none" stroke="#1b2c46" stroke-width="1"/></pattern></defs>
+                <rect width="500" height="220" fill="url(#grid)"/>
+                <path d="M0 110 H500 M250 0 V220" stroke="#52627a" stroke-width="1.2"/>
+                <path d="M0 110 C42 10 83 10 125 110 S208 210 250 110 S333 10 375 110 S458 210 500 110" fill="none" stroke="#69a7ff" stroke-width="3"/>
+                <path d="M0 110 C42 10 83 10 125 110 S208 210 250 110 S333 10 375 110 S458 210 500 110" fill="none" stroke="#69a7ff" stroke-width="12" opacity=".08"/>
+              </svg>
+              <div class="art-foot">TIME · FREQUENCY · PHASE</div>
+            </div>
+            <div class="project-info">
+              <div class="project-tags"><span>PYTHON</span><span>MATPLOTLIB</span></div>
+              <h3>Signals & system studies</h3>
+              <p>Visualising sinusoidal signals and exploring the relationship between mathematical models, system response and circuit behaviour.</p>
+              <span class="project-status"><i></i> ONGOING EXPLORATION</span>
+            </div>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-art logic-art">
+              <div class="art-caption">HARDWARE NOTES / 003</div>
+              <div class="chip-graphic"><span>ATmega</span><strong>328P</strong><small>MICROCONTROLLER</small><div class="chip-pins"></div></div>
+              <div class="art-foot">INPUT → PROCESS → OUTPUT</div>
+            </div>
+            <div class="project-info">
+              <div class="project-tags"><span>EMBEDDED SYSTEMS</span><span>C / C++</span></div>
+              <h3>Microcontroller experiments</h3>
+              <p>Learning through Arduino-based experiments, digital outputs, timing behaviour and the interaction between software and physical hardware.</p>
+              <span class="project-status"><i></i> EXPERIMENTAL</span>
+            </div>
+          </article>
+        </div>
+        <p class="section-footnote">A living portfolio — projects and documentation will grow as the work progresses.</p>
+      </div>
+    </section>
+
+    <section class="content-section section-wrap" id="explorations">
+      <div class="section-heading reveal">
+        <span class="section-index">[ 03 / AREAS OF EXPLORATION ]</span>
+        <div><p class="section-overline">THE IDEAS THAT KEEP ME EXPLORING</p><h2>More than one<br><span>way to think.</span></h2></div>
+      </div>
+      <div class="explore-list">
+        <article class="explore-row reveal"><span class="explore-number">01</span><div><h3>Electronics & embedded systems</h3><p>Arduino, microcontrollers, digital logic, display interfacing, PCB layouts and hands-on prototyping.</p></div><span class="explore-arrow">↗</span></article>
+        <article class="explore-row reveal"><span class="explore-number">02</span><div><h3>Electrical engineering</h3><p>AC circuit analysis, RLC networks, phasors, transient response, transfer functions and system stability.</p></div><span class="explore-arrow">↗</span></article>
+        <article class="explore-row reveal"><span class="explore-number">03</span><div><h3>Mathematics & modelling</h3><p>Linear algebra, differential equations, Laplace transforms, least-squares approximation and mathematical reasoning.</p></div><span class="explore-arrow">↗</span></article>
+        <article class="explore-row reveal"><span class="explore-number">04</span><div><h3>Programming & computation</h3><p>C, Python, data visualisation and using code to test, model and communicate technical ideas.</p></div><span class="explore-arrow">↗</span></article>
+      </div>
+    </section>
+
+    <section class="curiosity-section" id="curiosity">
+      <div class="section-wrap curiosity-inner">
+        <div class="section-heading reveal">
+          <span class="section-index">[ 04 / THE CURIOSITY LAB ]</span>
+          <div><p class="section-overline">QUESTIONS ARE A STARTING POINT</p><h2>Always asking<br><span>what if?</span></h2></div>
+        </div>
+        <div class="curiosity-content reveal">
+          <p class="large-copy">The most interesting part of learning is often the question that appears just after an answer.</p>
+          <div class="question-grid">
+            <div><span>01 / SYSTEMS</span><p>What do poles tell us about the behaviour and stability of a system?</p></div>
+            <div><span>02 / CIRCUITS</span><p>How do energy storage and transient response emerge from circuit elements?</p></div>
+            <div><span>03 / MATHEMATICS</span><p>How can an abstract mathematical idea become a useful engineering tool?</p></div>
+            <div><span>04 / MAKING</span><p>What changes when a theoretical design meets real hardware?</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing-section section-wrap" id="contact">
+      <span class="section-index">[ 05 / CONNECT ]</span>
+      <p class="section-overline">OPEN TO IDEAS, COLLABORATION & CONVERSATION</p>
+      <h2>Let's explore<br><span>what's possible.</span></h2>
+      <p class="closing-copy">Have an interesting idea, a technical question or a project worth exploring? I'd be glad to connect.</p>
+      <a class="button button-primary" href="mailto:hello@example.com">Start a conversation <span>↗</span></a>
+      <p class="contact-note">Replace this placeholder email with your preferred public contact address.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer section-wrap">
+    <a class="brand" href="#home"><span class="brand-mark">B<span>.</span>C</span><span class="brand-name">BEYOND THE CIRCUIT</span></a>
+    <span>BUILT AROUND CURIOSITY <span class="footer-blue">✳</span></span>
+    <span>© <span id="year"></span> · PERSONAL PORTFOLIO</span>
+  </footer>
+  <script src="script.js"></script>
+</body>
 </html>
