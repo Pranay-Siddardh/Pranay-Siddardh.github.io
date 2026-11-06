@@ -1,606 +1,498 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080b12">
-<meta name="description" content="Pranay Siddarth Reddy — portfolio in embedded systems, robotics and software.">
-<title>Pranay Siddarth Reddy — Developer Portfolio</title>
-<style>
-/* ---------- Design system ---------- */
-:root{
-  color-scheme:dark;
-  --bg:#080b12; --surface:#0e1420; --surface-2:#121b2a;
-  --ink:#edf4ff; --muted:#96a6bb; --faint:#62738a;
-  --line:rgba(164,190,224,.13); --line-strong:rgba(164,190,224,.23);
-  --mint:#79f2c0; --blue:#8aafff; --violet:#b79bff;
-  --radius:18px; --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
-  --sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --ease:cubic-bezier(.2,.75,.25,1);
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0; min-height:100vh; color:var(--ink); font-family:var(--sans);
-  background:
-    radial-gradient(ellipse at 75% -10%,rgba(74,113,189,.19),transparent 40rem),
-    radial-gradient(ellipse at 0% 45%,rgba(45,174,139,.075),transparent 34rem),
-    var(--bg);
-  overflow-x:hidden;
-}
-body::before{
-  content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.22;
-  background-image:linear-gradient(rgba(140,170,215,.075) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(140,170,215,.075) 1px,transparent 1px);
-  background-size:48px 48px;
-  mask-image:linear-gradient(to bottom,#000 0%,transparent 78%);
-}
-body::after{
-  content:""; position:fixed; width:34rem; height:34rem; border-radius:50%;
-  right:-17rem; top:30%; pointer-events:none; z-index:-1;
-  background:rgba(84,136,205,.055); filter:blur(75px);
-}
-a{color:inherit;text-decoration:none}
-button,input,textarea{font:inherit}
-button{ -webkit-tap-highlight-color:transparent }
-::selection{background:rgba(121,242,192,.25);color:#fff}
-.shell{width:min(1160px,calc(100% - 48px));margin-inline:auto}
-.progress-track{position:fixed;top:0;left:0;width:100%;height:2px;z-index:100;background:transparent}
-.progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--mint),var(--blue));box-shadow:0 0 14px rgba(121,242,192,.55)}
-/* ---------- Navigation ---------- */
-.site-header{
-  position:sticky;top:0;z-index:50;border-bottom:1px solid var(--line);
-  background:rgba(8,11,18,.76);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-}
-.navbar{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.brand{font:700 .96rem var(--mono);letter-spacing:-.06em;white-space:nowrap}
-.brand .bracket{color:var(--mint)}
-.brand .brand-name{color:var(--ink)}
-.nav-right{display:flex;align-items:center;gap:22px}
-.nav-links{display:flex;align-items:center;gap:5px}
-.nav-link{
-  position:relative;border:0;background:transparent;color:var(--muted);cursor:pointer;
-  border-radius:9px;padding:11px 13px;font-size:.86rem;transition:color .25s,background .25s;
-}
-.nav-link:hover{color:var(--ink);background:rgba(138,175,255,.08)}
-.nav-link.active{color:var(--mint);background:rgba(121,242,192,.075)}
-.nav-link.active::after{
-  content:"";position:absolute;left:13px;right:13px;bottom:4px;height:1px;
-  background:var(--mint);box-shadow:0 0 10px rgba(121,242,192,.7);
-}
-.nav-availability{display:flex;align-items:center;gap:8px;color:#9db0c6;font: .7rem var(--mono);white-space:nowrap}
-.status-dot{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px rgba(121,242,192,.75)}
-.menu-toggle{display:none;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:10px;padding:9px 12px;cursor:pointer}
-/* ---------- Page transitions ---------- */
-main{min-height:calc(100vh - 160px)}
-.page{
-  display:none;opacity:0;transform:translate3d(0,13px,0);
-  padding:82px 0 100px;
-}
-.page.active{display:block}
-.page.is-entering{animation:page-enter .58s var(--ease) both}
-.page.is-leaving{display:block;position:absolute;left:0;right:0;pointer-events:none;animation:page-leave .22s ease both}
-@keyframes page-enter{from{opacity:0;transform:translate3d(0,13px,0);filter:blur(4px)}to{opacity:1;transform:translate3d(0,0,0);filter:blur(0)}}
-@keyframes page-leave{to{opacity:0;transform:translate3d(0,-7px,0);filter:blur(3px)}}
-/* ---------- Type & shared components ---------- */
-.eyebrow{display:flex;align-items:center;gap:11px;color:var(--mint);font: .74rem var(--mono);letter-spacing:.14em;text-transform:uppercase}
-.eyebrow::before{content:"";width:25px;height:1px;background:var(--mint);box-shadow:0 0 9px rgba(121,242,192,.6)}
-h1,h2,h3,p{margin-top:0}
-h1{max-width:850px;margin:22px 0 24px;font-size:clamp(3rem,7.4vw,6.4rem);line-height:.99;letter-spacing:-.075em;font-weight:760}
-h2{font-size:clamp(2.15rem,4.5vw,3.65rem);line-height:1.06;letter-spacing:-.065em;margin:16px 0}
-h3{font-size:1.12rem;letter-spacing:-.03em;margin:0 0 10px}
-.gradient-text{color:transparent;background:linear-gradient(105deg,#f0f6ff 3%,#9cefd2 54%,#91adff 100%);background-clip:text;-webkit-background-clip:text}
-.lead{max-width:700px;color:var(--muted);font-size:clamp(1rem,1.55vw,1.17rem);line-height:1.85}
-.section-intro{max-width:740px;margin-bottom:40px}
-.section-intro .lead{margin-bottom:0}
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  border:1px solid var(--line-strong);border-radius:11px;padding:13px 17px;
-  background:rgba(255,255,255,.025);color:var(--ink);font-weight:600;font-size:.88rem;
-  cursor:pointer;transition:transform .25s var(--ease),border-color .25s,background .25s,box-shadow .25s;
-}
-.btn:hover{transform:translateY(-3px);border-color:rgba(121,242,192,.6);box-shadow:0 12px 32px rgba(0,0,0,.2)}
-.btn-primary{background:var(--mint);color:#07130f;border-color:var(--mint);box-shadow:0 7px 28px rgba(121,242,192,.12)}
-.btn-primary:hover{background:#9bffd7;box-shadow:0 12px 34px rgba(121,242,192,.2)}
-.btn .arrow{font-size:1.05rem;transition:transform .25s}
-.btn:hover .arrow{transform:translate(3px,-2px)}
-/* ---------- Hero ---------- */
-.hero-layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(310px,.78fr);align-items:center;gap:clamp(38px,7vw,90px)}
-.hero-copy{padding:14px 0}
-.hero-copy .lead{max-width:650px}
-.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-.hero-meta{display:flex;flex-wrap:wrap;gap:20px;margin-top:40px;color:var(--faint);font: .72rem var(--mono)}
-.hero-meta span{display:flex;align-items:center;gap:8px}
-.hero-meta span::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--mint)}
-.code-window{
-  position:relative;overflow:hidden;border:1px solid rgba(138,175,255,.22);border-radius:19px;
-  background:linear-gradient(145deg,rgba(19,30,48,.96),rgba(10,15,25,.97));
-  box-shadow:0 28px 90px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.035);
-}
-.code-window::before{content:"";position:absolute;width:230px;height:230px;right:-110px;top:-120px;border-radius:50%;background:rgba(121,242,192,.09);filter:blur(35px)}
-.window-bar{height:48px;display:flex;align-items:center;gap:7px;padding:0 17px;border-bottom:1px solid var(--line)}
-.window-dot{width:9px;height:9px;border-radius:50%;background:#ff7474}
-.window-dot:nth-child(2){background:#f5c66b}.window-dot:nth-child(3){background:#73dfaa}
-.window-title{margin-left:auto;color:#72849c;font: .69rem var(--mono)}
-.code-content{position:relative;padding:26px 24px 30px;font:clamp(.72rem,1.08vw,.83rem)/2.05 var(--mono);color:#bdcbe0;white-space:nowrap}
-.code-line{display:block}.code-indent{padding-left:22px}.code-indent2{padding-left:44px}
-.c-comment{color:#6e819b}.c-key{color:#c4a4ff}.c-type{color:#91b5ff}.c-fn{color:#8ee9ca}.c-string{color:#f2c98c}
-.terminal-caret{display:inline-block;width:7px;height:1.05em;background:var(--mint);vertical-align:middle;animation:caret 1s steps(2,start) infinite}
-@keyframes caret{to{visibility:hidden}}
-.hero-glow{position:absolute;inset:auto auto -65px -60px;width:190px;height:190px;border-radius:50%;background:rgba(121,242,192,.08);filter:blur(48px);pointer-events:none}
-/* ---------- Cards / grids ---------- */
-.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
-.card{
-  position:relative;overflow:hidden;padding:25px;border:1px solid var(--line);border-radius:var(--radius);
-  background:linear-gradient(145deg,rgba(17,27,43,.88),rgba(11,17,28,.9));
-  transition:transform .3s var(--ease),border-color .3s,box-shadow .3s;
-}
-.card::before{content:"";position:absolute;inset:0;opacity:0;background:radial-gradient(circle at 85% 0%,rgba(121,242,192,.08),transparent 55%);transition:opacity .3s;pointer-events:none}
-.card:hover{transform:translateY(-5px);border-color:rgba(121,242,192,.34);box-shadow:0 20px 50px rgba(0,0,0,.18)}
-.card:hover::before{opacity:1}
-.card>*{position:relative}
-.card-top{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:22px}
-.card-icon{width:43px;height:43px;display:grid;place-items:center;border:1px solid rgba(121,242,192,.19);border-radius:12px;background:rgba(121,242,192,.055);color:var(--mint);font: .78rem var(--mono)}
-.pill{border:1px solid rgba(138,175,255,.2);border-radius:30px;padding:6px 9px;color:#9dbaff;font: .66rem var(--mono)}
-.card p{color:var(--muted);font-size:.9rem;line-height:1.78;margin:0 0 18px}
-.tag-list{display:flex;flex-wrap:wrap;gap:7px}
-.tag-list span{padding:6px 9px;border-radius:7px;background:rgba(138,175,255,.075);color:#aabbd1;font: .67rem var(--mono)}
-/* ---------- About / skills ---------- */
-.two-column{display:grid;grid-template-columns:1fr 1fr;gap:17px}
-.prose{color:var(--muted);font-size:.93rem;line-height:1.9}
-.prose p:last-child{margin-bottom:0}
-.skill-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.skill-item{display:flex;align-items:center;gap:10px;padding:13px 14px;border:1px solid var(--line);border-radius:10px;background:rgba(8,13,22,.42);color:#d9e4f3;font-size:.84rem}
-.skill-item::before{content:"";width:6px;height:6px;flex:0 0 6px;border-radius:2px;transform:rotate(45deg);background:var(--mint);box-shadow:0 0 8px rgba(121,242,192,.5)}
-.small-note{margin:17px 0 0;color:var(--faint);font-size:.77rem;line-height:1.65}
-/* ---------- Project filters ---------- */
-.filters{display:flex;flex-wrap:wrap;gap:8px;margin:-13px 0 22px}
-.filter-btn{border:1px solid var(--line);background:rgba(255,255,255,.02);color:var(--muted);border-radius:30px;padding:8px 12px;font:.72rem var(--mono);cursor:pointer;transition:.2s}
-.filter-btn:hover,.filter-btn.active{color:var(--mint);border-color:rgba(121,242,192,.35);background:rgba(121,242,192,.07)}
-.project-card[hidden]{display:none}
-/* ---------- Contact ---------- */
-.contact-layout{display:grid;grid-template-columns:minmax(250px,.78fr) minmax(0,1.22fr);gap:18px;align-items:start}
-.contact-panel{padding:26px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(145deg,rgba(17,27,43,.9),rgba(11,17,28,.94))}
-.contact-panel>p{color:var(--muted);font-size:.9rem;line-height:1.8}
-.mail-symbol{width:46px;height:46px;display:grid;place-items:center;margin-bottom:20px;border:1px solid rgba(121,242,192,.2);border-radius:13px;background:rgba(121,242,192,.06);color:var(--mint);font-size:1.2rem}
-.email-address{display:inline-block;color:var(--mint);font-size:.9rem;overflow-wrap:anywhere;line-height:1.7}
-.copy-status{min-height:1.2em;margin-top:10px;color:var(--mint);font:.7rem var(--mono)}
-form{display:grid;gap:15px}
-label{display:grid;gap:8px;color:#c8d5e6;font-size:.8rem;font-weight:600}
-input,textarea{
-  width:100%;border:1px solid var(--line-strong);border-radius:10px;padding:13px 14px;
-  outline:none;background:rgba(5,10,18,.7);color:var(--ink);font-size:.88rem;
-  transition:border-color .2s,box-shadow .2s;
-}
-input::placeholder,textarea::placeholder{color:#5f7087}
-input:focus,textarea:focus{border-color:rgba(121,242,192,.7);box-shadow:0 0 0 3px rgba(121,242,192,.08)}
-textarea{min-height:155px;resize:vertical;line-height:1.7}
-.form-footnote{margin:0;color:var(--faint);font-size:.73rem;line-height:1.65}
-.form-feedback{min-height:1.2em;color:var(--mint);font-size:.76rem}
-/* ---------- Footer / reveal ---------- */
-.site-footer{border-top:1px solid var(--line);padding:25px 0;color:#718198;font: .7rem var(--mono)}
-.footer-inner{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
-.reveal.visible{opacity:1;transform:translateY(0)}
-/* ---------- Responsive ---------- */
-@media(max-width:850px){
-  .hero-layout{grid-template-columns:1fr;gap:42px}
-  .code-window{max-width:600px}
-  .contact-layout{grid-template-columns:1fr}
-}
-@media(max-width:680px){
-  .shell{width:min(100% - 32px,1160px)}
-  .navbar{min-height:68px}
-  .nav-availability{display:none}
-  .menu-toggle{display:inline-flex;align-items:center;gap:8px}
-  .nav-links{
-    display:none;position:absolute;top:68px;left:0;right:0;padding:12px 16px 17px;
-    flex-direction:column;align-items:stretch;background:rgba(8,11,18,.97);
-    border-bottom:1px solid var(--line);backdrop-filter:blur(18px)
-  }
-  .nav-links.open{display:flex;animation:menu-in .22s ease both}
-  @keyframes menu-in{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}
-  .nav-link{text-align:left;padding:12px 13px}
-  .nav-link.active::after{left:13px;right:auto;width:25px;bottom:5px}
-  .nav-right{gap:10px}
-  .page{padding:54px 0 72px}
-  .cards,.two-column{grid-template-columns:1fr}
-  .section-intro{margin-bottom:30px}
-  .card{padding:22px}
-}
-@media(max-width:420px){
-  .shell{width:calc(100% - 26px)}
-  h1{font-size:clamp(2.65rem,13vw,3.6rem)}
-  .skill-grid{grid-template-columns:1fr}
-  .code-content{padding:21px 17px;font-size:.69rem}
-  .hero-meta{gap:12px}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-  .reveal{opacity:1;transform:none}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#080d19">
+    <meta name="description" content="Sid.dev - Developer and Electronics Enthusiast">
+
+    <title>Sid.dev</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
+
 <body>
-<div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
-<header class="site-header">
-  <div class="shell navbar">
-    <a class="brand" href="#home" aria-label="Pranay home"><span class="bracket">&lt;</span><span class="brand-name">pranay.dev</span><span class="bracket"> /&gt;</span></a>
-    <div class="nav-right">
-      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
-        <button class="nav-link active" data-page="home">Home</button>
-        <button class="nav-link" data-page="about">About</button>
-        <button class="nav-link" data-page="projects">Projects</button>
-        <button class="nav-link" data-page="skills">Skills</button>
-        <button class="nav-link" data-page="contact">Contact</button>
-      </nav>
-      <div class="nav-availability"><span class="status-dot"></span> BUILDING & LEARNING</div>
-      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navLinks"><span id="menuIcon">☰</span><span>Menu</span></button>
+
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+    <div class="background-grid"></div>
+
+    <div class="cursor-glow"></div>
+
+    <div class="progress-track">
+        <div class="progress-bar" id="progressBar"></div>
     </div>
-  </div>
-</header>
 
-<main class="shell" id="mainContent">
-  <section class="page active" id="home" aria-hidden="false">
-    <div class="hero-layout">
-      <div class="hero-copy">
-        <div class="eyebrow">Developer portfolio / 2026</div>
-        <h1>Pranay Siddarth <span class="gradient-text">Reddy.</span></h1>
-        <p class="lead">I build things that connect code to the physical world. Exploring embedded systems, robotics, electronics and software—one experiment, prototype and improvement at a time.</p>
-        <div class="hero-actions">
-          <button class="btn btn-primary" data-go="projects">Explore projects <span class="arrow">↗</span></button>
-          <button class="btn" data-go="contact">Get in touch <span class="arrow">→</span></button>
-        </div>
-        <div class="hero-meta"><span>Embedded systems</span><span>Robotics</span><span>Software</span></div>
-      </div>
-      <div class="code-window" aria-label="Decorative code editor">
-        <div class="window-bar"><i class="window-dot"></i><i class="window-dot"></i><i class="window-dot"></i><span class="window-title">about_me.cpp</span></div>
-        <div class="code-content">
-          <span class="code-line c-comment">// A little about how I work</span>
-          <span class="code-line"><span class="c-key">class</span> <span class="c-type">Developer</span> {</span>
-          <span class="code-line code-indent"><span class="c-key">public:</span></span>
-          <span class="code-line code-indent"><span class="c-type">void</span> <span class="c-fn">build</span>() {</span>
-          <span class="code-line code-indent2">learn();</span>
-          <span class="code-line code-indent2">prototype();</span>
-          <span class="code-line code-indent2">test();</span>
-          <span class="code-line code-indent2">improve();</span>
-          <span class="code-line code-indent">}</span>
-          <span class="code-line"><span class="c-key">private:</span></span>
-          <span class="code-line code-indent"><span class="c-type">const char*</span> mindset = <span class="c-string">"keep building"</span>;</span>
-          <span class="code-line">};</span>
-          <br>
-          <span class="code-line c-comment">// compile. experiment. repeat.</span>
-          <span class="code-line"><span class="c-fn">Developer</span> pranay; <i class="terminal-caret"></i></span>
-        </div>
-        <div class="hero-glow"></div>
-      </div>
-    </div>
-  </section>
+    <header class="navbar">
+        <a href="#home" class="logo" data-page="home">
+            <span class="logo-icon">&lt;/&gt;</span>
+            <span class="logo-text">Sid.dev</span>
+        </a>
 
-  <section class="page" id="about" aria-hidden="true">
-    <div class="section-intro">
-      <div class="eyebrow">01 / About</div>
-      <h2>Curiosity turns into <span class="gradient-text">working systems.</span></h2>
-      <p class="lead">I am interested in the space where electronics, firmware and software meet.</p>
-    </div>
-    <div class="two-column">
-      <article class="card reveal">
-        <div class="card-top"><div class="card-icon">A/01</div><span class="pill">Approach</span></div>
-        <h3>Build. Measure. Understand.</h3>
-        <div class="prose">
-          <p>I enjoy understanding how a system behaves from the circuit level up: what a GPIO pin is doing, how a motor driver responds, how wireless commands reach a controller and how software turns those signals into useful behaviour.</p>
-          <p>My approach is hands-on and iterative. I break a problem into smaller parts, test each part, read the results and refine the complete system.</p>
-        </div>
-      </article>
-      <article class="card reveal">
-        <div class="card-top"><div class="card-icon">A/02</div><span class="pill">Interests</span></div>
-        <h3>Areas I keep exploring</h3>
-        <div class="skill-grid">
-          <div class="skill-item">Robotics & UGVs</div><div class="skill-item">Embedded systems</div>
-          <div class="skill-item">Wireless control</div><div class="skill-item">Microcontrollers</div>
-          <div class="skill-item">Electronics</div><div class="skill-item">Software development</div>
-        </div>
-      </article>
-    </div>
-  </section>
+        <button class="menu-toggle" id="menuToggle"
+                aria-label="Toggle navigation"
+                aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
 
-  <section class="page" id="projects" aria-hidden="true">
-    <div class="section-intro">
-      <div class="eyebrow">02 / Selected work</div>
-      <h2>Experiments made <span class="gradient-text">tangible.</span></h2>
-      <p class="lead">A selection of hands-on projects in robotics, embedded control and electronics. Project status is labelled honestly: some are ongoing experiments.</p>
-    </div>
-    <div class="filters" role="group" aria-label="Filter projects">
-      <button class="filter-btn active" data-filter="all" aria-pressed="true">All projects</button>
-      <button class="filter-btn" data-filter="robotics" aria-pressed="false">Robotics</button>
-      <button class="filter-btn" data-filter="embedded" aria-pressed="false">Embedded</button>
-      <button class="filter-btn" data-filter="electronics" aria-pressed="false">Electronics</button>
-    </div>
-    <div class="cards" id="projectGrid">
-      <article class="card project-card reveal" data-category="robotics embedded">
-        <div class="card-top"><div class="card-icon">P/01</div><span class="pill">In development</span></div>
-        <h3>Wi-Fi Controlled UGV</h3>
-        <p>A differential-drive rover controlled through a browser interface. Exploring motor-driver interfacing, wireless command handling and responsive movement using ESP32 and Raspberry Pi Pico W platforms.</p>
-        <div class="tag-list"><span>ESP32</span><span>Pico W</span><span>L293D</span><span>Wi-Fi</span><span>Arduino IDE</span></div>
-      </article>
-      <article class="card project-card reveal" data-category="robotics embedded">
-        <div class="card-top"><div class="card-icon">P/02</div><span class="pill">Experimental</span></div>
-        <h3>ESP32-CAM Rover Concept</h3>
-        <p>An exploration of camera integration and wireless video capability as an extension to the rover. Camera initialization and streaming remain experimental.</p>
-        <div class="tag-list"><span>ESP32-CAM</span><span>Embedded C++</span><span>Wi-Fi</span><span>Camera</span></div>
-      </article>
-      <article class="card project-card reveal" data-category="embedded electronics">
-        <div class="card-top"><div class="card-icon">P/03</div><span class="pill">Hardware build</span></div>
-        <h3>ULN2003 Stepper Driver</h3>
-        <p>A standalone driver build exploring the 28BYJ-48 stepper motor, coil sequencing, driver connections and indicator LEDs for observing control activity.</p>
-        <div class="tag-list"><span>28BYJ-48</span><span>ULN2003</span><span>Driver circuits</span><span>Arduino</span></div>
-      </article>
-      <article class="card project-card reveal" data-category="electronics">
-        <div class="card-top"><div class="card-icon">P/04</div><span class="pill">Electronics</span></div>
-        <h3>PAM8403 Audio Amplifier</h3>
-        <p>A compact stereo amplifier experiment using a PAM8403 module and 4-ohm speakers, investigating power quality, audio noise and distortion behaviour.</p>
-        <div class="tag-list"><span>PAM8403</span><span>Audio</span><span>Power</span><span>Debugging</span></div>
-      </article>
-    </div>
-  </section>
+        <nav class="nav-links" id="navLinks">
+            <button class="nav-link active" data-page="home">Home</button>
+            <button class="nav-link" data-page="about">About</button>
+            <button class="nav-link" data-page="projects">Projects</button>
+            <button class="nav-link" data-page="skills">Skills</button>
+            <button class="nav-link" data-page="contact">Contact</button>
+        </nav>
 
-  <section class="page" id="skills" aria-hidden="true">
-    <div class="section-intro">
-      <div class="eyebrow">03 / Toolkit</div>
-      <h2>Tools for turning ideas <span class="gradient-text">into prototypes.</span></h2>
-      <p class="lead">A practical toolkit shaped by building, testing and troubleshooting real projects.</p>
-    </div>
-    <div class="two-column">
-      <article class="card reveal">
-        <div class="card-top"><div class="card-icon">S/01</div><span class="pill">Software</span></div>
-        <h3>Programming & platforms</h3>
-        <div class="skill-grid">
-          <div class="skill-item">C / C++</div><div class="skill-item">Arduino IDE</div>
-          <div class="skill-item">ESP32</div><div class="skill-item">Raspberry Pi Pico W</div>
-          <div class="skill-item">HTML / CSS</div><div class="skill-item">JavaScript</div>
-        </div>
-      </article>
-      <article class="card reveal">
-        <div class="card-top"><div class="card-icon">S/02</div><span class="pill">Hardware</span></div>
-        <h3>Electronics & concepts</h3>
-        <div class="skill-grid">
-          <div class="skill-item">Motor control</div><div class="skill-item">L293D drivers</div>
-          <div class="skill-item">Stepper motors</div><div class="skill-item">GPIO & PWM</div>
-          <div class="skill-item">Wi-Fi interfaces</div><div class="skill-item">Circuit debugging</div>
-        </div>
-      </article>
-    </div>
-    <p class="small-note">This list reflects tools and topics explored in the projects shown here; it is not a claim of professional certification.</p>
-  </section>
+        <a href="#contact" class="nav-cta" data-page="contact">
+            Let's Talk <span>↗</span>
+        </a>
+    </header>
 
-  <section class="page" id="contact" aria-hidden="true">
-    <div class="section-intro">
-      <div class="eyebrow">04 / Contact</div>
-      <h2>Let's make something <span class="gradient-text">interesting.</span></h2>
-      <p class="lead">For project discussions, collaboration or questions, send me a message.</p>
-    </div>
-    <div class="contact-layout">
-      <aside class="contact-panel reveal">
-        <div class="mail-symbol">✉</div>
-        <h3>Drop me an email</h3>
-        <p>You can reach me directly at this address:</p>
-        <a class="email-address" href="mailto:pranaysiddardhareddy@gmail.com">pranaysiddardhareddy@gmail.com</a>
-        <div style="margin-top:20px"><button class="btn" type="button" id="copyEmail">Copy email address <span>⧉</span></button></div>
-        <div class="copy-status" id="copyStatus" aria-live="polite"></div>
-      </aside>
-      <div class="contact-panel reveal">
-        <h3>Send a message</h3>
-        <p>Write a subject and message. Your email app will open with the details filled in.</p>
-        <form id="emailForm">
-          <label for="sender">Your name <span style="color:var(--faint);font-weight:400">(optional)</span>
-            <input id="sender" name="sender" autocomplete="name" maxlength="100" placeholder="Your name">
-          </label>
-          <label for="subject">Subject
-            <input id="subject" name="subject" required maxlength="120" placeholder="What would you like to discuss?">
-          </label>
-          <label for="message">Message
-            <textarea id="message" name="message" required maxlength="5000" placeholder="Write your message here..."></textarea>
-          </label>
-          <button class="btn btn-primary" type="submit">Compose email <span class="arrow">↗</span></button>
-          <p class="form-footnote">This uses your device's configured email application. The website does not send or store your message.</p>
-          <div class="form-feedback" id="formFeedback" aria-live="polite"></div>
-        </form>
-      </div>
-    </div>
-  </section>
-</main>
+    <main class="main-content">
 
-<footer class="site-footer">
-  <div class="shell footer-inner"><span>© <span id="year"></span> Pranay Siddarth Reddy</span><span>Designed & developed with curiosity <span style="color:var(--mint)">&lt;/&gt;</span></span></div>
-</footer>
+        <!-- HOME -->
+        <section class="page active" id="home" aria-hidden="false">
 
-<script>
-(() => {
-  "use strict";
-  const pages = [...document.querySelectorAll(".page")];
-  const nav = document.getElementById("navLinks");
-  const navButtons = [...document.querySelectorAll(".nav-link")];
-  const menuToggle = document.getElementById("menuToggle");
-  const menuIcon = document.getElementById("menuIcon");
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let currentPage = "home";
-  let transitionTimer = null;
+            <div class="hero section-container">
 
-  function closeMenu() {
-    nav.classList.remove("open");
-    menuToggle.setAttribute("aria-expanded", "false");
-    menuIcon.textContent = "☰";
-  }
+                <div class="hero-content">
 
-  function setActiveNav(id) {
-    navButtons.forEach(button => {
-      const active = button.dataset.page === id;
-      button.classList.toggle("active", active);
-      if (active) button.setAttribute("aria-current", "page");
-      else button.removeAttribute("aria-current");
-    });
-  }
+                    <div class="availability reveal">
+                        <span class="status-dot"></span>
+                        DEVELOPER · ENGINEERING ENTHUSIAST
+                    </div>
 
-  function showPage(id, updateAddress = true) {
-    const next = document.getElementById(id);
-    if (!next || !next.classList.contains("page") || id === currentPage) {
-      closeMenu();
-      return;
-    }
+                    <p class="hero-intro reveal">
+                        Hello, World! I'm
+                    </p>
 
-    const previous = document.getElementById(currentPage);
-    clearTimeout(transitionTimer);
+                    <h1 class="hero-title reveal">
+                        Building things
+                        <span class="gradient-text">beyond code.</span>
+                    </h1>
 
-    if (previous) {
-      previous.classList.remove("active", "is-entering");
-      previous.classList.add("is-leaving");
-      previous.setAttribute("aria-hidden", "true");
-    }
+                    <p class="hero-description reveal">
+                        Exploring the intersection of software, electronics,
+                        robotics and creative engineering.
+                        Turning ideas into working projects, one experiment
+                        at a time.
+                    </p>
 
-    next.classList.remove("is-leaving", "is-entering");
-    next.classList.add("active");
-    next.setAttribute("aria-hidden", "false");
-    // Force style calculation so the enter animation starts reliably.
-    void next.offsetWidth;
-    next.classList.add("is-entering");
+                    <div class="hero-buttons reveal">
+                        <button class="primary-button" data-page="projects">
+                            Explore Projects <span>↗</span>
+                        </button>
 
-    currentPage = id;
-    setActiveNav(id);
-    closeMenu();
+                        <button class="secondary-button" data-page="contact">
+                            Get in Touch
+                        </button>
+                    </div>
 
-    if (updateAddress) history.pushState({ page: id }, "", "#" + id);
-    window.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
+                    <div class="hero-stats reveal">
+                        <div>
+                            <strong>04<span>+</span></strong>
+                            <small>Projects</small>
+                        </div>
 
-    transitionTimer = setTimeout(() => {
-      pages.forEach(page => {
-        if (page.id !== currentPage) {
-          page.classList.remove("active", "is-leaving", "is-entering");
-          page.style.position = "";
-        }
-      });
-      next.classList.remove("is-entering");
-      observeReveals();
-    }, reducedMotion ? 0 : 240);
-  }
+                        <div>
+                            <strong>∞</strong>
+                            <small>Ideas</small>
+                        </div>
 
-  navButtons.forEach(button => button.addEventListener("click", () => showPage(button.dataset.page)));
-  document.querySelectorAll("[data-go]").forEach(button => button.addEventListener("click", () => showPage(button.dataset.go)));
+                        <div>
+                            <strong>01</strong>
+                            <small>Goal: Keep Building</small>
+                        </div>
+                    </div>
 
-  menuToggle.addEventListener("click", () => {
-    const isOpen = nav.classList.toggle("open");
-    menuToggle.setAttribute("aria-expanded", String(isOpen));
-    menuIcon.textContent = isOpen ? "×" : "☰";
-  });
+                </div>
 
-  window.addEventListener("popstate", () => {
-    const id = location.hash.slice(1) || "home";
-    if (id !== currentPage) showPage(id, false);
-  });
+                <div class="hero-visual reveal">
+                    <div class="orbit orbit-one"></div>
+                    <div class="orbit orbit-two"></div>
 
-  // Project category filters.
-  const filterButtons = [...document.querySelectorAll(".filter-btn")];
-  const projectCards = [...document.querySelectorAll(".project-card")];
-  filterButtons.forEach(button => button.addEventListener("click", () => {
-    const filter = button.dataset.filter;
-    filterButtons.forEach(item => {
-      const active = item === button;
-      item.classList.toggle("active", active);
-      item.setAttribute("aria-pressed", String(active));
-    });
-    projectCards.forEach(card => {
-      const categories = card.dataset.category.split(" ");
-      card.hidden = filter !== "all" && !categories.includes(filter);
-    });
-    observeReveals();
-  }));
+                    <div class="floating-code code-top">
+                        const creativity = true;
+                    </div>
 
-  // Subtle reveal animation for content as it enters view.
-  let revealObserver;
-  function observeReveals() {
-    if (revealObserver) revealObserver.disconnect();
-    const visiblePage = document.getElementById(currentPage);
-    const items = visiblePage.querySelectorAll(".reveal:not(.visible)");
-    if (!("IntersectionObserver" in window) || reducedMotion) {
-      items.forEach(item => item.classList.add("visible"));
-      return;
-    }
-    revealObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: .12, rootMargin: "0px 0px -25px 0px" });
-    items.forEach(item => revealObserver.observe(item));
-  }
+                    <div class="code-window">
+                        <div class="window-header">
+                            <div class="window-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <span>developer.js</span>
+                        </div>
 
-  // Reading progress indicator.
-  const progressBar = document.getElementById("progressBar");
-  function updateProgress() {
-    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
-    progressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
-  }
-  window.addEventListener("scroll", updateProgress, { passive: true });
-  window.addEventListener("resize", updateProgress);
+                        <div class="code-content">
+                            <p><span class="code-purple">const</span>
+                                developer = {</p>
+                            <p class="indent">name:
+                                <span class="code-green">'Sid'</span>,</p>
+                            <p class="indent">focus:
+                                <span class="code-green">'Engineering'</span>,</p>
+                            <p class="indent">interests: [</p>
+                            <p class="indent2">
+                                <span class="code-orange">'Robotics'</span>,
+                            </p>
+                            <p class="indent2">
+                                <span class="code-orange">'Electronics'</span>,
+                            </p>
+                            <p class="indent2">
+                                <span class="code-orange">'Software'</span>
+                            </p>
+                            <p class="indent">],</p>
+                            <p class="indent">building: <span class="code-blue">true</span></p>
+                            <p>};</p>
+                            <p class="code-comment">// Always learning...</p>
+                            <p class="terminal-line">
+                                <span>sid@portfolio:~$</span>
+                                <i></i>
+                            </p>
+                        </div>
+                    </div>
 
-  // Contact actions.
-  const emailAddress = "pranaysiddardhareddy@gmail.com";
-  document.getElementById("copyEmail").addEventListener("click", async () => {
-    const status = document.getElementById("copyStatus");
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(emailAddress);
-        status.textContent = "Email address copied.";
-      } else {
-        const helper = document.createElement("textarea");
-        helper.value = emailAddress;
-        helper.style.position = "fixed";
-        helper.style.opacity = "0";
-        document.body.appendChild(helper);
-        helper.select();
-        const copied = document.execCommand("copy");
-        helper.remove();
-        status.textContent = copied ? "Email address copied." : emailAddress;
-      }
-    } catch {
-      status.textContent = emailAddress;
-    }
-  });
+                    <div class="floating-code code-bottom">
+                        <span class="status-dot"></span> System online
+                    </div>
+                </div>
 
-  document.getElementById("emailForm").addEventListener("submit", event => {
-    event.preventDefault();
-    const sender = document.getElementById("sender").value.trim();
-    const subject = document.getElementById("subject").value.trim();
-    const message = document.getElementById("message").value.trim();
-    if (!subject || !message) {
-      document.getElementById("formFeedback").textContent = "Please enter both a subject and a message.";
-      return;
-    }
-    const body = (sender ? `Name: ${sender}\n\n` : "") + message;
-    const url = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    document.getElementById("formFeedback").textContent = "Opening your email application…";
-    window.location.href = url;
-  });
+            </div>
 
-  document.getElementById("year").textContent = new Date().getFullYear();
+            <div class="scroll-indicator">
+                <span></span>
+                SCROLL TO EXPLORE
+            </div>
 
-  // Initial route and first render.
-  const initial = location.hash.slice(1);
-  if (pages.some(page => page.id === initial)) {
-    pages.forEach(page => {
-      const active = page.id === initial;
-      page.classList.toggle("active", active);
-      page.setAttribute("aria-hidden", String(!active));
-    });
-    currentPage = initial;
-  }
-  setActiveNav(currentPage);
-  document.getElementById(currentPage).classList.add("is-entering");
-  observeReveals();
-  updateProgress();
-})();
-</script>
+        </section>
+
+        <!-- ABOUT -->
+        <section class="page" id="about" aria-hidden="true">
+
+            <div class="section-container inner-page">
+
+                <div class="section-heading reveal">
+                    <span class="eyebrow">01 / ABOUT ME</span>
+                    <h2>Curiosity drives<br>
+                        <span class="gradient-text">everything.</span>
+                    </h2>
+                    <p>A little about the person behind the projects.</p>
+                </div>
+
+                <div class="about-grid">
+
+                    <div class="about-card glass-card reveal">
+                        <div class="card-icon">⌘</div>
+                        <h3>Beyond the Screen</h3>
+                        <p>
+                            My interests go beyond writing software.
+                            I enjoy working with physical hardware,
+                            experimenting with circuits and understanding
+                            how different systems interact.
+                        </p>
+                    </div>
+
+                    <div class="about-card glass-card reveal">
+                        <div class="card-icon">⚡</div>
+                        <h3>Learning by Building</h3>
+                        <p>
+                            From microcontrollers to motor drivers,
+                            I prefer practical experimentation.
+                            Every project is an opportunity to understand
+                            the engineering behind the result.
+                        </p>
+                    </div>
+
+                    <div class="about-card glass-card reveal">
+                        <div class="card-icon">◎</div>
+                        <h3>My Approach</h3>
+                        <p>
+                            Break complex problems into smaller pieces,
+                            test assumptions, debug systematically,
+                            and improve the design until it works.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="about-note glass-card reveal">
+                    <span class="note-symbol">"</span>
+                    <p>
+                        The goal isn't just to make something work.
+                        It's to understand why it works.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- PROJECTS -->
+        <section class="page" id="projects" aria-hidden="true">
+
+            <div class="section-container inner-page">
+
+                <div class="section-heading reveal">
+                    <span class="eyebrow">02 / SELECTED WORK</span>
+                    <h2>Things I've <span class="gradient-text">built.</span></h2>
+                    <p>Experiments, electronics and engineering projects.</p>
+                </div>
+
+                <div class="project-filters reveal">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="robotics">Robotics</button>
+                    <button class="filter-btn" data-filter="embedded">Embedded</button>
+                    <button class="filter-btn" data-filter="electronics">Electronics</button>
+                </div>
+
+                <div class="project-grid">
+
+                    <article class="project-card glass-card reveal"
+                             data-category="robotics embedded">
+
+                        <div class="project-visual visual-robot">
+                            <span class="visual-symbol">◈</span>
+                            <span class="visual-label">01 / ROBOTICS</span>
+                        </div>
+
+                        <div class="project-info">
+                            <div class="project-tags">
+                                <span>ESP32</span>
+                                <span>Wi-Fi</span>
+                                <span>Robotics</span>
+                            </div>
+
+                            <h3>Wi-Fi Controlled UGV</h3>
+
+                            <p>
+                                A remotely controlled ground vehicle using
+                                a microcontroller, motor driver and
+                                browser-based control interface.
+                            </p>
+
+                            <span class="project-status">Hardware Project</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card glass-card reveal"
+                             data-category="embedded">
+
+                        <div class="project-visual visual-camera">
+                            <span class="visual-symbol">◎</span>
+                            <span class="visual-label">02 / EMBEDDED</span>
+                        </div>
+
+                        <div class="project-info">
+                            <div class="project-tags">
+                                <span>ESP32-CAM</span>
+                                <span>Arduino</span>
+                            </div>
+
+                            <h3>ESP32 Camera System</h3>
+
+                            <p>
+                                Exploring embedded camera systems,
+                                Wi-Fi connectivity and microcontroller
+                                based image streaming.
+                            </p>
+
+                            <span class="project-status">Embedded Systems</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card glass-card reveal"
+                             data-category="electronics embedded">
+
+                        <div class="project-visual visual-stepper">
+                            <span class="visual-symbol">⟳</span>
+                            <span class="visual-label">03 / ELECTRONICS</span>
+                        </div>
+
+                        <div class="project-info">
+                            <div class="project-tags">
+                                <span>ULN2003</span>
+                                <span>28BYJ-48</span>
+                            </div>
+
+                            <h3>Stepper Motor Driver</h3>
+
+                            <p>
+                                A standalone stepper motor driver
+                                implementation using ULN2003 and
+                                a 28BYJ-48 motor.
+                            </p>
+
+                            <span class="project-status">Circuit Design</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card glass-card reveal"
+                             data-category="electronics">
+
+                        <div class="project-visual visual-audio">
+                            <span class="visual-symbol">∿</span>
+                            <span class="visual-label">04 / AUDIO</span>
+                        </div>
+
+                        <div class="project-info">
+                            <div class="project-tags">
+                                <span>PAM8403</span>
+                                <span>Audio</span>
+                            </div>
+
+                            <h3>Stereo Audio Amplifier</h3>
+
+                            <p>
+                                A compact stereo amplifier setup using
+                                a PAM8403 module and two 4-ohm speakers.
+                            </p>
+
+                            <span class="project-status">Electronics</span>
+                        </div>
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- SKILLS -->
+        <section class="page" id="skills" aria-hidden="true">
+
+            <div class="section-container inner-page">
+
+                <div class="section-heading reveal">
+                    <span class="eyebrow">03 / CAPABILITIES</span>
+                    <h2>Tools of the <span class="gradient-text">trade.</span></h2>
+                    <p>Technologies and areas I'm exploring.</p>
+                </div>
+
+                <div class="skills-grid">
+
+                    <div class="skill-card glass-card reveal">
+                        <span class="skill-icon">⌘</span>
+                        <h3>Programming</h3>
+                        <div class="skill-item">
+                            <div><span>C / C++</span><span>Exploring</span></div>
+                            <div class="skill-track"><span style="--level:75%"></span></div>
+                        </div>
+                        <div class="skill-item">
+                            <div><span>Python</span><span>Exploring</span></div>
+                            <div class="skill-track"><span style="--level:65%"></span></div>
+                        </div>
+                        <div class="skill-item">
+                            <div><span>JavaScript</span><span>Exploring</span></div>
+                            <div class="skill-track"><span style="--level:70%"></span></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-card glass-card reveal">
+                        <span class="skill-icon">ϟ</span>
+                        <h3>Embedded Systems</h3>
+                        <div class="skill-item">
+                            <div><span>ESP32</span><span>Hands-on</span></div>
+                            <div class="skill-track"><span style="--level:80%"></span></div>
+                        </div>
+                        <div class="skill-item">
+                            <div><span>Raspberry Pi Pico</span><span>Hands-on</span></div>
+                            <div class="skill-track"><span style="--level:65%"></span></div>
+                        </div>
+                        <div class="skill-item">
+                            <div><span>Arduino IDE</span><span>Hands-on</span></div>
+                            <div class="skill-track"><span style="--level:75%"></span></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-card glass-card reveal">
+                        <span class="skill-icon">⌬</span>
+                        <h3>Electronics</h3>
+                        <div class="skill-item">
+                            <div><span>Motor Drivers</span><span>Hands-on</span></div>
+                            <div class="skill-track"><span style="--level:75%"></span></div>
+                        </div>
+                        <div class="skill-item">
+                            <div><span>Basic Circuit Design</span><span>Hands-on</span></div>
+                            <div class="skill-track"><span style="--level:70%"></span></div>
+                        </div>
+                        <div class="skill-item">
+                            <div><span>Debugging</span><span>Learning</span></div>
+                            <div class="skill-track"><span style="--level:70%"></span></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <p class="skills-disclaimer reveal">
+                    Skill indicators are illustrative, not formal proficiency ratings.
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- CONTACT -->
+        <section class="page" id="contact" aria-hidden="true">
+
+            <div class="section-container inner-page contact-page">
+
+                <div class="section-heading reveal">
+                    <span class="eyebrow">04 / GET IN TOUCH</span>
+                    <h2>Have an idea?<br>
+                        <span class="gradient-text">Let's connect.</span>
+                    </h2>
+                    <p>
+                        Interested in projects, engineering,
+                        collaboration or just exchanging ideas?
+                    </p>
+                </div>
+
+                <div class="contact-card glass-card reveal">
+
+                    <div class="contact-icon">✉</div>
+
+                    <h3>Drop me a message.</h3>
+
+                    <p>
+                        The easiest way to reach me is through email.
+                    </p>
+
+                    <a class="email-link"
+                       href="mailto:pranaysiddardhareddy@gmail.com">
+                        pranaysiddardhareddy@gmail.com
+                        <span>↗</span>
+                    </a>
+
+                    <button class="primary-button copy-email"
+                            id="copyEmail">
+                        Copy Email <span>▣</span>
+                    </button>
+
+                    <span class="copy-feedback" id="copyFeedback"
+                          aria-live="polite"></span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <a href="#home" class="footer-logo" data-page="home">Sid.dev</a>
+        <p>Designed & built with curiosity.</p>
+        <span>© <span id="year"></span> Sid.dev</span>
+    </footer>
+
 </body>
 </html>
+
